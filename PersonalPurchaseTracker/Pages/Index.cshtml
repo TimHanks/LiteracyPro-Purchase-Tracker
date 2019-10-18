@@ -51,10 +51,7 @@
                      data-edit-template="edit-template"
                      data-template="template"
                      data-bind="source: transactions,
-                            visible: isVisible,
-                            events: {
-                              save: onSave
-                            }"
+                            visible: isVisible"
                      style="height: 540px; overflow: auto"></div>
                 <div id="pager" data-role="pager" data-bind="source: transactions" class="k-pager-wrap">
                     <span>Total Cost:&nbsp;</span> <strong><span id="totalCost" name="totalCost" data-bind="value:totalTransactionCost, text:totalTransactionCost"></span></strong>
