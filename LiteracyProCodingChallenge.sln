@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29409.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalPurchaseTracker", "PersonalPurchaseTracker\PersonalPurchaseTracker.csproj", "{5EFB78C4-9BC7-4865-9782-F431CB9F6AF8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5EFB78C4-9BC7-4865-9782-F431CB9F6AF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EFB78C4-9BC7-4865-9782-F431CB9F6AF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EFB78C4-9BC7-4865-9782-F431CB9F6AF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EFB78C4-9BC7-4865-9782-F431CB9F6AF8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {91B5D7C9-ED03-4684-9441-393405C9A935}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,66 @@
+﻿@page
+@model PersonalPurchaseTracker.Pages.Transactions.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Transaction[0].Payee)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Transaction[0].PurchaseAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Transaction[0].PurchaseDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Transaction[0].Memo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Transaction[0].PurchaseCategory)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Transaction)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Payee)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PurchaseAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PurchaseDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Memo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PurchaseCategory.CategoryName)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+

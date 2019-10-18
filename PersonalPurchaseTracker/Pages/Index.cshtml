@@ -1,0 +1,137 @@
+﻿@page
+@model IndexModel
+@using PersonalPurchaseTracker.Models;
+@{
+    ViewData["Title"] = "Purchase Tracker";
+}
+    <div id="purchaseTracking">
+        <div class="purchaseContainer k-content wide">
+            <div>
+                <div class="row k-content purchaseInsertWrapper">
+                    <div class="col-12">
+                        <form id="aspForm">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="row">
+                                <div class="form-group col-4">
+                                    <label asp-for="Transaction.Payee" class="control-label"></label>
+                                    <input asp-for="Transaction.Payee" data-bind="value:newPayee" class="form-control" />
+                                    <span asp-validation-for="Transaction.Payee" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-4">
+                                    <label asp-for="Transaction.PurchaseDate" class="control-label"></label>
+                                    <input asp-for="Transaction.PurchaseDate" data-bind="value:newPurchaseDate" class="form-control" />
+                                    <span asp-validation-for="Transaction.PurchaseDate" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-4">
+                                    <label asp-for="Transaction.PurchaseAmount" class="control-label"></label>
+                                    <input asp-for="Transaction.PurchaseAmount" data-bind="value:newPurchaseAmount" class="form-control" />
+                                    <span asp-validation-for="Transaction.PurchaseAmount" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-4">
+                                    <label asp-for="Transaction.CategoryID" class="control-label"></label>
+                                    <select id="newCategory" asp-for="Transaction.CategoryID" class="form-control" data-bind="value:newCategoryID" asp-items="@(new SelectList ((List<Category>)ViewData["CategoryList"],"ID","CategoryName"))"></select>
+                                    <span asp-validation-for="Transaction.CategoryID" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-8">
+                                    <label asp-for="Transaction.Memo" class="control-label"></label>
+                                    <input asp-for="Transaction.Memo" class="form-control" data-bind="value:newMemo" />
+                                    <span asp-validation-for="Transaction.Memo" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button class="k-button k-button-icontext" type="submit" value="Create" data-bind="events: { click: onSubmit }"><span class="k-icon k-i-add"></span>Add new record</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div id="purchaseListView"
+                     data-role="listview"
+                     data-edit-template="edit-template"
+                     data-template="template"
+                     data-bind="source: transactions,
+                            visible: isVisible,
+                            events: {
+                              save: onSave
+                            }"
+                     style="height: 540px; overflow: auto"></div>
+                <div id="pager" data-role="pager" data-bind="source: transactions" class="k-pager-wrap">
+                    <span>Total Cost:&nbsp;</span> <strong><span id="totalCost" name="totalCost" data-bind="value:totalTransactionCost, text:totalTransactionCost"></span></strong>
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;Average Cost:&nbsp;</span> <strong><span id="averageCost" name="averageCost" data-bind="text:averageTransactionCost"></span></strong>
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                </div>
+            </div>
+        </div>
+
+        @*Template For Kendo ListView display*@
+        <script type="text/x-kendo-tmpl" id="template">
+            <div class="transaction-view k-widget">
+                <dl>
+                    <dt><div class="row"><div class="col-3">Payee</div><div class="col-3">Purchase Date</div> <div class="col-3">Purchase Amount</div></div></dt>
+                    <dd><div class="row"><div class="col-3">#:payee || ""#</div><div class="col-3">#:kendo.toString(kendo.parseDate(purchaseDate), "d")#</div><div class="col-3">#:kendo.toString(purchaseAmount,"c")#</div></div></dd>
+                    <dt><div class="row"><div class="col-3">Purchase Category</div> <div class="col-6">Memo</div></div></dt>
+                    <dd><div class="row"><div class="col-3">#:purchaseCategory.categoryName#</div><div class="col-6">#:memo#</div></div></dd>
+                </dl>
+                <div class="edit-buttons">
+                    <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
+                    <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
+                </div>
+            </div>
+        </script>
+
+
+        @*Template For Kendo ListView display during Edit-Mode*@
+        <script type="text/x-kendo-tmpl" id="edit-template">
+            <div class="transaction-view k-widget">
+                <dl>
+                    <dt><div class="row"><div class="col-3">Payee</div><div class="col-3">Purchase Date</div> <div class="col-3">Purchase Amount</div></div></dt>
+                    <dd>
+                        <div class="row">
+                            <div class="col-3">
+                                <input type="text" class="k-textbox" data-bind="value:payee" name="Payee" required="required" validationMessage="required" maxlength="30" />
+                                <span data-for="Payee" class="k-invalid-msg"></span>
+                            </div>
+                            <div class="col-3">
+                                <input type="text" data-bind="value:purchaseDate" data-role="datepicker" data-type="number" name="purchaseDate" required="required" min="1" validationMessage="required" />
+                                <span data-for="UnitPrice" class="k-invalid-msg"></span>
+                            </div>
+                            <div class="col-3">
+                                <input type="text" data-bind="value:purchaseAmount" data-role="numerictextbox" data-type="number" name="PurchaseAmount" required="required" min="1" max="1000000" validationMessage="required" />
+                                <span data-for="PurchaseAmount" class="k-invalid-msg"></span>
+                            </div>
+                        </div>
+                    </dd>
+                    <dt><div class="row"><div class="col-3">Purchase Category</div> <div class="col-6">Memo</div></div></dt>
+                    <dd>
+                        <div class="row">
+                            <div class="col-3">
+                                <input data-role="dropdownlist"
+                                       data-auto-bind="false"
+                                       data-text-field="categoryName"
+                                       data-value-field="id"
+                                       data-bind="value: purchaseCategory,
+                                                     source: categories,
+                                                     visible: isVisible,
+                                                     enabled: isEnabled"
+                                       required="required" validationMessage="required" />
+                                <span data-for="CategoryName" class="k-invalid-msg"></span>
+                            </div><div class="col-8">
+                                <input type="text" class="k-textbox col-12" data-bind="value:memo" name="Memo" maxlength="70" width="100%" style="width:100%" />
+                            </div>
+
+
+                        </div>
+                    </dd>
+                </dl>
+                <div class="edit-buttons">
+                    <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+                    <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+                </div>
+            </div>
+        </script>
+    </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
