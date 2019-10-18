@@ -1,6 +1,6 @@
 # LiteracyProCodingChallenge
 
-This challenge was created in Visual Studio 2019.
+This challenge was created in Visual Studio 2019 using MVC Core and Entity Framework Core.
 
 To create the databases, you can update the PersonalPurchaseTrackerContext connection string in appsettings.json to use the database you want, then run "Update-Database" from the PM Console.  This will create the required tables and seed them with data.
 
